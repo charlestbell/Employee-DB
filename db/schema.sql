@@ -1,4 +1,4 @@
--- DROP DATABASE IF EXISTS auction_DB; 
+DROP DATABASE IF EXISTS employee_DB; 
 
 CREATE DATABASE employee_DB;
 
@@ -19,7 +19,7 @@ CREATE TABLE role (
 CREATE TABLE employee (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   first_name VARCHAR(30) NOT NULL,
-  last_name DEC NOT NULL,
+  last_name VARCHAR(30) NOT NULL,
   role_id INT NOT NULL,
   manager_id INT
 );
