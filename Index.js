@@ -1,9 +1,10 @@
 const cTable = require("console.table");
 const inquirer = require("inquirer");
 const mysql = require("mysql");
-const viewFunction = require("./viewFunctions");
+const viewFunctions = require("./viewFunctions");
+const addFunctions = require("./addFunctions");
 
-const connection = mysql.createConnection({
+module.exports = connection = mysql.createConnection({
   host: "localhost",
 
   // Your port, if not 3306
@@ -22,31 +23,6 @@ connection.connect((err) => {
   console.log(`connected as id ${connection.threadId}`);
 });
 
-// Print employee to screen
-// connection.query("SELECT * FROM employee", (err, result) => {
-//   if (err) throw err;
-
-//   console.table(result);
-// });
-// Print joined employee, with role and depeartments to screen.
-const joinedTable = () => {
-  return new Promise((resolve, reject) => {
-    connection.query(
-      `SELECT *
-    FROM employee
-    LEFT JOIN role
-    ON employee.role_id = role.id
-    LEFT JOIN department
-    ON role.department_id = department.id`,
-      (err, result) => {
-        if (err) throw err;
-        console.table(result);
-        resolve();
-      }
-    );
-  });
-};
-
 //Run the inquirer prompt
 const mainMenu = () => {
   joinedTable().then((response) => {
@@ -56,7 +32,7 @@ const mainMenu = () => {
           type: "list",
           message: "What would you like to do?",
           name: "choice",
-          choices: ["Add Department"],
+          choices: ["Add Department", "Add Role"],
         },
       ])
       .then((response) => {
@@ -64,40 +40,15 @@ const mainMenu = () => {
           case "Add Department":
             addDepartment();
             break;
+          case "Add Role":
+            addRole();
+            break;
 
           default:
             break;
         }
       });
   });
-};
-
-// Add a department to the db
-const addDepartment = () => {
-  viewFunction.listDepartments;
-  inquirer
-    .prompt([
-      {
-        type: "input",
-        message: "Name the department you would like to add.",
-        name: "newDepartment",
-      },
-    ])
-    .then((response) => {
-      newDept = response.newDepartment;
-      //   TODO Make first letter always uppercase
-      connection.query(
-        `INSERT INTO department (name)
-        VALUES ("${newDept}");`,
-        (err, result) => {
-          if (err) throw err;
-          console.log(`New department called "${newDept}" added successfully`);
-
-          viewFunction.listDepartments;
-          mainMenu();
-        }
-      );
-    });
 };
 
 mainMenu();
