@@ -1,3 +1,4 @@
+const { restoreDefaultPrompts } = require("inquirer");
 const inquirer = require("inquirer");
 const mysql = require("mysql");
 connection = require("./index.js");
@@ -35,41 +36,57 @@ module.exports = addDepartment = () => {
 };
 // Add a role to the db
 module.exports = addRole = () => {
-  listRoles().then((response) => {
-    inquirer
-      .prompt([
-        {
-          type: "input",
-          message: "Name the role you would like to add.",
-          name: "title",
-        },
-        {
-          type: "input",
-          message: "What is this role's Salary?",
-          name: "salary",
-        },
-        {
-          type: "input",
-          message: "What Department ID is associated with this Role?",
-          name: "departmentID",
-        },
-      ])
-      .then((response) => {
-        title = response.title;
-        salary = response.salary;
-        departmentID = response.departmentID;
-        //   TODO Make first letter always uppercase
-        connection.query(
-          `INSERT INTO role (title, salary, department_id)
-          VALUES ("${title}", ${salary}, ${departmentID});`,
-          (err, result) => {
-            if (err) throw err;
-            console.log(`New department called "${Title}" added successfully`);
+  connection.query(`SELECT * FROM department;`, (err, results) => {
+    listRoles().then((response) => {
+      inquirer
+        .prompt([
+          {
+            type: "input",
+            message: "Name the role you would like to add.",
+            name: "title",
+          },
+          {
+            type: "input",
+            message: "What is this role's Salary?",
+            name: "salary",
+          },
+          {
+            type: "list",
+            choices() {
+              const choicesArray = [];
+              results.forEach(({ name }) => {
+                choicesArray.push(name);
+              });
+              return choicesArray;
+            },
+            message: "What Department is associated with this Role?",
+            name: "departmentName",
+          },
+        ])
+        .then((response) => {
+          title = response.title;
+          salary = response.salary;
+          let departmentID;
+          results.forEach((element) => {
+            if (element.name === response.departmentName) {
+              departmentID = element.id;
+            }
+          });
+          //   TODO Make first letter always uppercase
+          connection.query(
+            `INSERT INTO role (title, salary, department_id)
+                VALUES ("${title}", ${salary}, ${departmentID});`,
+            (err, result) => {
+              if (err) throw err;
 
-            listRoles();
-            mainMenu();
-          }
-        );
-      });
+              console.log(
+                `New department called "${title}" added successfully`
+              );
+              listRoles();
+              mainMenu();
+            }
+          );
+        });
+    });
   });
 };

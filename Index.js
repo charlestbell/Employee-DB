@@ -24,7 +24,7 @@ connection.connect((err) => {
 });
 
 //Run the inquirer prompt
-const mainMenu = () => {
+module.exports = mainMenu = () => {
   joinedTable().then((response) => {
     inquirer
       .prompt([
@@ -32,7 +32,7 @@ const mainMenu = () => {
           type: "list",
           message: "What would you like to do?",
           name: "choice",
-          choices: ["Add Department", "Add Role"],
+          choices: ["Add Employee", "Add Department", "Add Role"],
         },
       ])
       .then((response) => {
@@ -41,6 +41,9 @@ const mainMenu = () => {
             addDepartment();
             break;
           case "Add Role":
+            addRole();
+            break;
+          case "Add Employee":
             addRole();
             break;
 
