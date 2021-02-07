@@ -54,8 +54,8 @@ module.exports = addRole = () => {
             type: "list",
             choices() {
               const choicesArray = [];
-              results.forEach(({ name }) => {
-                choicesArray.push(name);
+              results.forEach((element) => {
+                choicesArray.push(element.name);
               });
               return choicesArray;
             },
@@ -79,14 +79,97 @@ module.exports = addRole = () => {
             (err, result) => {
               if (err) throw err;
 
-              console.log(
-                `New department called "${title}" added successfully`
-              );
+              console.log(`New role called "${title}" added successfully`);
               listRoles();
               mainMenu();
             }
           );
         });
     });
+  });
+};
+
+// Add an employee to the db
+module.exports = addEmployee = () => {
+  let employee;
+  connection.query(`SELECT * FROM employee`, (err, results) => {
+    employee = results;
+    // console.log(`Employee = ${JSON.stringify(employee)}`);
+  });
+
+  connection.query(`SELECT * FROM role`, (err, role) => {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          message: "What is the employee's first name?",
+          name: "first_name",
+        },
+        {
+          type: "input",
+          message: "What is the employee's last name",
+          name: "last_name",
+        },
+        {
+          type: "list",
+          choices() {
+            const choicesArray = [];
+            role.forEach((element) => {
+              choicesArray.push(element.title);
+            });
+            return choicesArray;
+          },
+          message: "Choose which role this employee has",
+          name: "roleName",
+        },
+        {
+          type: "list",
+          choices() {
+            const choicesArray = [];
+            employee.forEach((element) => {
+              choicesArray.push(`${element.first_name} ${element.last_name}`);
+            });
+            return choicesArray;
+          },
+          message: "Who is the employee's manager?",
+          name: "manager",
+        },
+      ])
+      .then((response) => {
+        const managerFistName = response.manager.split(" ");
+        console.log(`managerFirstName: ${managerFistName[0]}`);
+        const first_name = response.first_name;
+        const last_name = response.last_name;
+        let role_id;
+        let manager_id;
+        // Find the id number of the chosen role and store it in role_id
+        role.forEach((element) => {
+          if (element.title === response.roleName) {
+            role_id = element.id;
+          }
+          // Find the id number of the chosen manager and store it in manager_id
+        });
+        employee.forEach((element) => {
+          if (
+            element.first_name === managerFistName[0] &&
+            element.last_name === managerFistName[1]
+          ) {
+            manager_id = element.id;
+          }
+        });
+        //   TODO Make first letter always uppercase
+        // Save the new employee to the db
+        connection.query(
+          `INSERT INTO employee (first_name, last_name, role_id, manager_id)
+                VALUES ("${first_name}", "${last_name}", ${role_id}, ${manager_id});`,
+          (err, result) => {
+            if (err) throw err;
+            console.log(
+              `New employee ${first_name} ${last_name} added successfully`
+            );
+            mainMenu();
+          }
+        );
+      });
   });
 };

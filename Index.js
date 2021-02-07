@@ -44,7 +44,7 @@ module.exports = mainMenu = () => {
             addRole();
             break;
           case "Add Employee":
-            addRole();
+            addEmployee();
             break;
 
           default:

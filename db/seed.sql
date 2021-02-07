@@ -7,6 +7,8 @@ VALUES ("Dev manager", 80000, 1),("developer", 70000, 1),("designer", 60000, 2),
 INSERT INTO employee (first_name, last_name, role_id)
 VALUES ("Victor", "Stonecipher", 1),("Jeremy","Alexander", 2),("Marianna", "Andrey", 4), ("Ruslan", "Roman", 5),("Elisa", "Braden", 6), ("Branko", "Faraji", 7),("Adriana", "Emili", 8), ("Sameer", "Gerben", 9),("Yelena", "Robrecht", 10), ("Aracelis", "Shiva", 2),("Marja", "Arif", 3), ("Kepheus", "Iovianus", 7);
 
+USE employee_DB;
+
 SELECT
       employee.id,
       employee.first_name,
