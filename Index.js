@@ -41,6 +41,7 @@ module.exports = mainMenu = () => {
             "Add Employee",
             "Add Department",
             "Add Role",
+            "Exit",
           ],
         },
       ])
