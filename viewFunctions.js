@@ -4,6 +4,7 @@ connection = require("./index.js");
 // Print joined employee, with role and depeartments to screen.
 module.exports = joinedTable = () => {
   return new Promise((resolve) => {
+    console.log("\n All Employees: \n");
     connection.query(
       `SELECT
       employee.id AS ID,
@@ -35,7 +36,7 @@ module.exports = joinedTable = () => {
 //Print Table of all Departments to screen
 module.exports = listDepartments = () => {
   return new Promise((resolve) => {
-    console.log("\n List of Departments: \n");
+    console.log("\n All Departments: \n");
     connection.query(`SELECT * FROM department`, (err, result) => {
       if (err) throw err;
       console.table(result);
@@ -46,23 +47,11 @@ module.exports = listDepartments = () => {
 //Print Table of all Roles to screen
 module.exports = listRoles = () => {
   return new Promise((resolve) => {
-    console.log("List of Roles:");
+    console.log("\n All Roles: \n");
     connection.query(`SELECT * FROM role`, (err, result) => {
       if (err) throw err;
       console.table(result);
       resolve();
     });
-  });
-};
-
-module.exports = viewEmployees = () => {
-  console.log("\n All Employees: \n");
-  joinedTable().then(() => {
-    navMenu();
-  });
-};
-module.exports = viewDepartments = () => {
-  listDepartments().then(() => {
-    navMenu();
   });
 };

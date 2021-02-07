@@ -36,6 +36,7 @@ module.exports = mainMenu = () => {
           choices: [
             "View Employees",
             "View Departments",
+            "View Roles",
             "Update Employee's Manager",
             "Update Employee's Role",
             "Add Employee",
@@ -63,10 +64,19 @@ module.exports = mainMenu = () => {
             updateEmployeeRole();
             break;
           case "View Employees":
-            viewEmployees();
+            joinedTable().then(() => {
+              navMenu();
+            });
             break;
           case "View Departments":
-            viewDepartments();
+            listDepartments().then(() => {
+              navMenu();
+            });
+            break;
+          case "View Roles":
+            listRoles().then(() => {
+              navMenu();
+            });
             break;
           case "Exit":
             process.exit([]);
