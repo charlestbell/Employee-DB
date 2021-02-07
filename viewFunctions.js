@@ -54,3 +54,9 @@ module.exports = listRoles = () => {
     });
   });
 };
+
+module.exports = viewEmployees = () => {
+  joinedTable().then(() => {
+    navMenu();
+  });
+};

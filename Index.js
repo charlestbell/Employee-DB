@@ -34,6 +34,7 @@ module.exports = mainMenu = () => {
           message: "What would you like to do?",
           name: "choice",
           choices: [
+            "View Employees",
             "Update Employee's Manager",
             "Update Employee's Role",
             "Add Employee",
@@ -59,12 +60,39 @@ module.exports = mainMenu = () => {
           case "Update Employee's Role":
             updateEmployeeRole();
             break;
+          case "View Employees":
+            viewEmployees();
+            break;
 
           default:
             break;
         }
       });
   });
+};
+
+module.exports = navMenu = () => {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        choices: ["Main Menu", "Done"],
+        message: "What would you like to do next? \n",
+        name: "choice",
+      },
+    ])
+    .then((response) => {
+      switch (response.choice) {
+        case "Main Menu":
+          mainMenu();
+          break;
+        case "Exit":
+          process.exit([]);
+          break;
+        default:
+          break;
+      }
+    });
 };
 
 mainMenu();

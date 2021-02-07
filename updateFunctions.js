@@ -66,7 +66,7 @@ module.exports = updateEmployeeManager = () => {
           (err, result) => {
             if (err) throw err;
             console.log(
-              `Employee ${response.employee}'s manager is now ${response.manager}`
+              `Employee ${response.employee}'s manager is now ${response.manager} \n`
             );
             mainMenu();
           }
