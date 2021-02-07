@@ -3,6 +3,7 @@ const inquirer = require("inquirer");
 const mysql = require("mysql");
 const viewFunctions = require("./viewFunctions");
 const addFunctions = require("./addFunctions");
+const updateFunctions = require("./updateFunctions");
 
 module.exports = connection = mysql.createConnection({
   host: "localhost",
@@ -32,7 +33,12 @@ module.exports = mainMenu = () => {
           type: "list",
           message: "What would you like to do?",
           name: "choice",
-          choices: ["Add Employee", "Add Department", "Add Role"],
+          choices: [
+            "Update Employee's Manager",
+            "Add Employee",
+            "Add Department",
+            "Add Role",
+          ],
         },
       ])
       .then((response) => {
@@ -45,6 +51,9 @@ module.exports = mainMenu = () => {
             break;
           case "Add Employee":
             addEmployee();
+            break;
+          case "Update Employee's Manager":
+            updateEmployeeManager();
             break;
 
           default:

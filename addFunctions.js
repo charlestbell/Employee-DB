@@ -94,7 +94,6 @@ module.exports = addEmployee = () => {
   let employee;
   connection.query(`SELECT * FROM employee`, (err, results) => {
     employee = results;
-    // console.log(`Employee = ${JSON.stringify(employee)}`);
   });
 
   connection.query(`SELECT * FROM role`, (err, role) => {
@@ -137,7 +136,6 @@ module.exports = addEmployee = () => {
       ])
       .then((response) => {
         const managerFistName = response.manager.split(" ");
-        console.log(`managerFirstName: ${managerFistName[0]}`);
         const first_name = response.first_name;
         const last_name = response.last_name;
         let role_id;

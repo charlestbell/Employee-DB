@@ -6,20 +6,23 @@ module.exports = joinedTable = () => {
   return new Promise((resolve) => {
     connection.query(
       `SELECT
-      employee.id,
-      employee.first_name,
-      employee.last_name,
-      role.title,
-      department.name AS department,
-      role.salary
+      employee.id AS ID,
+      CONCAT (employee.first_name, ' ', employee.last_name) "Full Name",
+      role.title AS Role,
+      department.name AS Department,
+      CONCAT (managerTable.first_name, ' ', managerTable.last_name) "Manager Name",
+      role.salary AS Salary
   FROM
-      employee
+      employee 
   LEFT JOIN
       role ON
       employee.role_id = role.id
   LEFT JOIN
       department ON
-      department.id = role.department_id;`,
+      department.id = role.department_id
+  LEFT JOIN employee AS managerTable ON
+      employee.manager_id = managerTable.id
+      ;`,
       (err, result) => {
         if (err) throw err;
         console.table(result);
