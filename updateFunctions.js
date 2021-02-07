@@ -20,7 +20,7 @@ module.exports = updateEmployeeManager = () => {
             });
             return choicesArray;
           },
-          message: "Which employee's manager wdo you want to update?",
+          message: "Which employee's manager who you want to update?",
           name: "employee",
         },
         {
@@ -38,25 +38,23 @@ module.exports = updateEmployeeManager = () => {
         },
       ])
       .then((response) => {
-        const managerFistName = response.manager.split(" ");
-        const employeeFistName = response.employee.split(" ");
-        const first_name = response.first_name;
-        const last_name = response.last_name;
+        const managerFirstName = response.manager.split(" ");
+        const employeeFirstName = response.employee.split(" ");
         let employee_id;
         let newManager_id;
         // Find the id number of the chosen employee and store it in employee_id
         employee.forEach((element) => {
           if (
-            element.first_name === employeeFistName[0] &&
-            element.last_name === employeeFistName[1]
+            element.first_name === employeeFirstName[0] &&
+            element.last_name === employeeFirstName[1]
           ) {
             employee_id = element.id;
           }
         });
         employee.forEach((element) => {
           if (
-            element.first_name === managerFistName[0] &&
-            element.last_name === managerFistName[1]
+            element.first_name === managerFirstName[0] &&
+            element.last_name === managerFirstName[1]
           ) {
             newManager_id = element.id;
           }
@@ -75,4 +73,86 @@ module.exports = updateEmployeeManager = () => {
         );
       });
   });
+};
+// Update the role id of one employee in the db
+module.exports = updateEmployeeRole = () => {
+  let employee;
+  let role;
+  connection.query(
+    `SELECT *
+  FROM employee;`,
+    (err, results) => {
+      employee = results;
+      connection.query(
+        `SELECT *
+      FROM role;`,
+        (err, results) => {
+          role = results;
+          inquirer
+            .prompt([
+              {
+                type: "list",
+                choices() {
+                  const choicesArray = [];
+                  employee.forEach((element) => {
+                    choicesArray.push(
+                      `${element.first_name} ${element.last_name}`
+                    );
+                  });
+                  return choicesArray;
+                },
+                message: "Which employee's role who you want to update?",
+                name: "employee",
+              },
+              {
+                type: "list",
+                choices() {
+                  const choicesArray = [];
+                  role.forEach((element) => {
+                    choicesArray.push(element.title);
+                  });
+                  return choicesArray;
+                },
+                message: "Which role do you want to set for this employee?",
+                name: "role",
+              },
+            ])
+            .then((response) => {
+              const employeeFirstName = response.employee.split(" ");
+              let employee_id;
+              let newRole_id;
+              // Find the id number of the chosen employee and store it in employee_id
+              employee.forEach((element) => {
+                if (
+                  element.first_name === employeeFirstName[0] &&
+                  element.last_name === employeeFirstName[1]
+                ) {
+                  employee_id = element.id;
+                }
+              });
+              employee.forEach((element) => {
+                if (element.title === element.role) {
+                  role.forEach((element) => {
+                    if (response.role === element.title)
+                      newRole_id = element.id;
+                  });
+                }
+              });
+              connection.query(
+                `UPDATE employee SET ? WHERE ?`,
+                [{ role_id: newRole_id }, { id: employee_id }],
+
+                (err, result) => {
+                  if (err) throw err;
+                  console.log(
+                    `Employee ${response.employee}'s role is now ${response.role} \n`
+                  );
+                  mainMenu();
+                }
+              );
+            });
+        }
+      );
+    }
+  );
 };

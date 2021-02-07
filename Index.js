@@ -35,6 +35,7 @@ module.exports = mainMenu = () => {
           name: "choice",
           choices: [
             "Update Employee's Manager",
+            "Update Employee's Role",
             "Add Employee",
             "Add Department",
             "Add Role",
@@ -54,6 +55,9 @@ module.exports = mainMenu = () => {
             break;
           case "Update Employee's Manager":
             updateEmployeeManager();
+            break;
+          case "Update Employee's Role":
+            updateEmployeeRole();
             break;
 
           default:

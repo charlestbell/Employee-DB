@@ -24,7 +24,7 @@ module.exports = addDepartment = () => {
           (err, result) => {
             if (err) throw err;
             console.log(
-              `New department called "${newDept}" added successfully`
+              `New department called "${newDept}" added successfully \n`
             );
 
             listDepartments();
@@ -79,7 +79,7 @@ module.exports = addRole = () => {
             (err, result) => {
               if (err) throw err;
 
-              console.log(`New role called "${title}" added successfully`);
+              console.log(`New role called "${title}" added successfully \n`);
               listRoles();
               mainMenu();
             }
@@ -126,7 +126,7 @@ module.exports = addEmployee = () => {
           choices() {
             const choicesArray = [];
             employee.forEach((element) => {
-              choicesArray.push(`${element.first_name} ${element.last_name}`);
+              choicesArray.push(`${element.first_name} ${element.last_name}\n`);
             });
             return choicesArray;
           },
@@ -163,7 +163,7 @@ module.exports = addEmployee = () => {
           (err, result) => {
             if (err) throw err;
             console.log(
-              `New employee ${first_name} ${last_name} added successfully`
+              `New employee ${first_name} ${last_name} added successfully\n`
             );
             mainMenu();
           }
