@@ -79,7 +79,7 @@ module.exports = addRole = () => {
             (err, result) => {
               if (err) throw err;
 
-              console.log(`New role called "${title}" added successfully \n`);
+              console.log(`\nNew role called "${title}" added successfully \n`);
               listRoles();
               mainMenu();
             }
@@ -163,7 +163,7 @@ module.exports = addEmployee = () => {
           (err, result) => {
             if (err) throw err;
             console.log(
-              `New employee ${first_name} ${last_name} added successfully\n`
+              `\n New employee ${first_name} ${last_name} added successfully\n`
             );
             mainMenu();
           }

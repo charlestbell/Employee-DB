@@ -65,10 +65,10 @@ module.exports = updateEmployeeManager = () => {
 
           (err, result) => {
             if (err) throw err;
-            console.log(
-              `Employee ${response.employee}'s manager is now ${response.manager} \n`
-            );
             mainMenu();
+            console.log(
+              `\n Employee ${response.employee}'s manager is now ${response.manager} \n`
+            );
           }
         );
       });
@@ -145,7 +145,7 @@ module.exports = updateEmployeeRole = () => {
                 (err, result) => {
                   if (err) throw err;
                   console.log(
-                    `Employee ${response.employee}'s role is now ${response.role} \n`
+                    `\n Employee ${response.employee}'s role is now ${response.role} \n`
                   );
                   mainMenu();
                 }

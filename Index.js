@@ -35,6 +35,7 @@ module.exports = mainMenu = () => {
           name: "choice",
           choices: [
             "View Employees",
+            "View Departments",
             "Update Employee's Manager",
             "Update Employee's Role",
             "Add Employee",
@@ -63,6 +64,12 @@ module.exports = mainMenu = () => {
           case "View Employees":
             viewEmployees();
             break;
+          case "View Departments":
+            viewDepartments();
+            break;
+          case "Exit":
+            process.exit([]);
+            break;
 
           default:
             break;
@@ -76,7 +83,7 @@ module.exports = navMenu = () => {
     .prompt([
       {
         type: "list",
-        choices: ["Main Menu", "Done"],
+        choices: ["Main Menu", "Exit"],
         message: "What would you like to do next? \n",
         name: "choice",
       },

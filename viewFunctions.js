@@ -35,7 +35,7 @@ module.exports = joinedTable = () => {
 //Print Table of all Departments to screen
 module.exports = listDepartments = () => {
   return new Promise((resolve) => {
-    console.log("List of Departments:");
+    console.log("\n List of Departments: \n");
     connection.query(`SELECT * FROM department`, (err, result) => {
       if (err) throw err;
       console.table(result);
@@ -56,7 +56,13 @@ module.exports = listRoles = () => {
 };
 
 module.exports = viewEmployees = () => {
+  console.log("\n All Employees: \n");
   joinedTable().then(() => {
+    navMenu();
+  });
+};
+module.exports = viewDepartments = () => {
+  listDepartments().then(() => {
     navMenu();
   });
 };
