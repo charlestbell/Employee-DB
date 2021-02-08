@@ -4,6 +4,7 @@ const mysql = require("mysql");
 const viewFunctions = require("./viewFunctions");
 const addFunctions = require("./addFunctions");
 const updateFunctions = require("./updateFunctions");
+const deleteFunctions = require("./deleteFunctions");
 
 module.exports = connection = mysql.createConnection({
   host: "localhost",
@@ -42,6 +43,7 @@ module.exports = mainMenu = () => {
             "Add Employee",
             "Add Department",
             "Add Role",
+            "Delete Employee",
             "Exit",
           ],
         },
@@ -77,6 +79,9 @@ module.exports = mainMenu = () => {
             listRoles().then(() => {
               navMenu();
             });
+            break;
+          case "Delete Employee":
+            deleteEmployee();
             break;
           case "Exit":
             process.exit([]);
