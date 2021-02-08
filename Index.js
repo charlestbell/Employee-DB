@@ -44,6 +44,7 @@ module.exports = mainMenu = () => {
             "Add Department",
             "Add Role",
             "Delete Employee",
+            "Delete Department",
             "Exit",
           ],
         },
@@ -82,6 +83,9 @@ module.exports = mainMenu = () => {
             break;
           case "Delete Employee":
             deleteEmployee();
+            break;
+          case "Delete Department":
+            deleteDepartment();
             break;
           case "Exit":
             process.exit([]);
