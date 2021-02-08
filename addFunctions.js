@@ -23,12 +23,12 @@ module.exports = addDepartment = () => {
           VALUES ("${newDept}");`,
           (err, result) => {
             if (err) throw err;
-            console.log(
-              `New department called "${newDept}" added successfully \n`
-            );
-
-            listDepartments();
-            mainMenu();
+            listDepartments().then(() => {
+              console.log(
+                `\n New department called "${newDept}" added successfully \n`
+              );
+              navMenu();
+            });
           }
         );
       });
@@ -78,10 +78,12 @@ module.exports = addRole = () => {
                 VALUES ("${title}", ${salary}, ${departmentID});`,
             (err, result) => {
               if (err) throw err;
-
-              console.log(`\nNew role called "${title}" added successfully \n`);
-              listRoles();
-              mainMenu();
+              listRoles().then(() => {
+                console.log(
+                  `\nNew role called "${title}" with Salary of ${salary} has been added to ${response.departmentName}.\n`
+                );
+                navMenu();
+              });
             }
           );
         });
@@ -126,7 +128,7 @@ module.exports = addEmployee = () => {
           choices() {
             const choicesArray = [];
             employee.forEach((element) => {
-              choicesArray.push(`${element.first_name} ${element.last_name}\n`);
+              choicesArray.push(`${element.first_name} ${element.last_name}`);
             });
             return choicesArray;
           },
@@ -162,10 +164,12 @@ module.exports = addEmployee = () => {
                 VALUES ("${first_name}", "${last_name}", ${role_id}, ${manager_id});`,
           (err, result) => {
             if (err) throw err;
-            console.log(
-              `\n New employee ${first_name} ${last_name} added successfully\n`
-            );
-            mainMenu();
+            joinedTable().then(() => {
+              console.log(
+                `\n New employee ${first_name} ${last_name} added successfully\n`
+              );
+              navMenu();
+            });
           }
         );
       });
