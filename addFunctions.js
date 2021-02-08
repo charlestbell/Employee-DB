@@ -25,7 +25,7 @@ module.exports = addDepartment = () => {
             if (err) throw err;
             listDepartments().then(() => {
               console.log(
-                `\n New department called "${newDept}" added successfully \n`
+                `New department called "${newDept}" added successfully \n`
               );
               navMenu();
             });
@@ -80,7 +80,7 @@ module.exports = addRole = () => {
               if (err) throw err;
               listRoles().then(() => {
                 console.log(
-                  `\nNew role called "${title}" with Salary of ${salary} has been added to ${response.departmentName}.\n`
+                  `New role called "${title}" with Salary of ${salary} has been added to ${response.departmentName}.\n`
                 );
                 navMenu();
               });
@@ -166,7 +166,7 @@ module.exports = addEmployee = () => {
             if (err) throw err;
             joinedTable().then(() => {
               console.log(
-                `\n New employee ${first_name} ${last_name} added successfully\n`
+                `New employee ${first_name} ${last_name} added successfully\n`
               );
               navMenu();
             });

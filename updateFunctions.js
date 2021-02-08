@@ -65,10 +65,12 @@ module.exports = updateEmployeeManager = () => {
 
           (err, result) => {
             if (err) throw err;
-            mainMenu();
-            console.log(
-              `\n Employee ${response.employee}'s manager is now ${response.manager} \n`
-            );
+            joinedTable().then(() => {
+              console.log(
+                `Employee ${response.employee}'s manager is now ${response.manager} \n`
+              );
+              navMenu();
+            });
           }
         );
       });
@@ -144,10 +146,12 @@ module.exports = updateEmployeeRole = () => {
 
                 (err, result) => {
                   if (err) throw err;
-                  console.log(
-                    `\n Employee ${response.employee}'s role is now ${response.role} \n`
-                  );
-                  mainMenu();
+                  joinedTable().then(() => {
+                    console.log(
+                      `Employee ${response.employee}'s role is now ${response.role} \n`
+                    );
+                    navMenu();
+                  });
                 }
               );
             });
