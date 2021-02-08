@@ -2,8 +2,14 @@ const mysql = require("mysql");
 connection = require("./index.js");
 
 // Print joined employee, with role and depeartments to screen.
-module.exports = joinedTable = () => {
+module.exports = joinedTable = (sortBy) => {
   return new Promise((resolve) => {
+    let orderBy;
+    if (sortBy != null) {
+      orderBy = sortBy;
+    } else {
+      orderBy = "'Full Name'";
+    }
     console.log("\n All Employees: \n");
     connection.query(
       `SELECT
@@ -23,7 +29,7 @@ module.exports = joinedTable = () => {
       department.id = role.department_id
   LEFT JOIN employee AS managerTable ON
       employee.manager_id = managerTable.id
-      ;`,
+      ORDER BY ${orderBy};`,
       (err, result) => {
         if (err) throw err;
         console.table(result);

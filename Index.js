@@ -36,6 +36,7 @@ module.exports = mainMenu = () => {
           name: "choice",
           choices: [
             "View Employees",
+            "View Employees by Manager",
             "View Departments",
             "View Roles",
             "Update Employee's Manager",
@@ -45,6 +46,7 @@ module.exports = mainMenu = () => {
             "Add Role",
             "Delete Employee",
             "Delete Department",
+            "Delete Role",
             "Exit",
           ],
         },
@@ -87,6 +89,14 @@ module.exports = mainMenu = () => {
           case "Delete Department":
             deleteDepartment();
             break;
+          case "Delete Role":
+            deleteRole();
+            break;
+          case "View Employees by Manager":
+            joinedTable(`managerTable.id DESC`).then(() => {
+              navMenu();
+            });
+            break;
           case "Exit":
             process.exit([]);
             break;
@@ -98,6 +108,7 @@ module.exports = mainMenu = () => {
   });
 };
 
+// Navigation Menu
 module.exports = navMenu = () => {
   inquirer
     .prompt([

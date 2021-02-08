@@ -4,6 +4,7 @@ const mysql = require("mysql");
 connection = require("./index.js");
 const viewFunctions = require("./viewFunctions");
 
+// Delete an Employee from the db
 module.exports = deleteEmployee = () => {
   joinedTable().then(() => {
     connection.query(`SELECT * FROM employee`, (err, employee) => {
@@ -85,6 +86,48 @@ module.exports = deleteDepartment = () => {
           listDepartments().then(() => {
             console.log(
               `Department "${departmentName}" has been deleted from the database \n`
+            );
+            navMenu();
+          });
+        });
+    });
+  });
+};
+// Delete a Role from the db
+module.exports = deleteRole = () => {
+  listRoles().then(() => {
+    connection.query(`SELECT * FROM role`, (err, role) => {
+      inquirer
+        .prompt([
+          {
+            type: "list",
+            choices() {
+              const choicesArray = [];
+              role.forEach((element) => {
+                choicesArray.push(element.title);
+              });
+              choicesArray.push("Cancel");
+              return choicesArray;
+            },
+            message: "Which role do you want to delete?",
+            name: "role",
+          },
+        ])
+        .then((response) => {
+          const roleName = response.role;
+          console.log(`roleName: ${roleName}`);
+          let toBeDeleted;
+          role.forEach((element) => {
+            if (element.title === roleName) {
+              toBeDeleted = element.id;
+            } else {
+              return mainMenu();
+            }
+          });
+          connection.query(`DELETE FROM role WHERE role.id = ${toBeDeleted}`);
+          listRoles().then(() => {
+            console.log(
+              `Role "${roleName}" has been deleted from the database \n`
             );
             navMenu();
           });
