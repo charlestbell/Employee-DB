@@ -1,3 +1,4 @@
+require("dotenv").config();
 const cTable = require("console.table");
 const inquirer = require("inquirer");
 const mysql = require("mysql");
@@ -16,7 +17,7 @@ module.exports = connection = mysql.createConnection({
   user: "root",
 
   // Be sure to update with your own MySQL password!
-  password: "222rangerGreen",
+  password: process.env.SQL_PASSWORD,
   database: "employee_DB",
 });
 
