@@ -2,10 +2,15 @@ require("dotenv").config();
 const cTable = require("console.table");
 const inquirer = require("inquirer");
 const mysql = require("mysql");
+const figlet = require("figlet");
 const viewFunctions = require("./viewFunctions");
 const addFunctions = require("./addFunctions");
 const updateFunctions = require("./updateFunctions");
 const deleteFunctions = require("./deleteFunctions");
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms)); //Copied from here: https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
+}
 
 module.exports = connection = mysql.createConnection({
   host: "localhost",
@@ -27,7 +32,16 @@ connection.connect((err) => {
 });
 
 //Run the inquirer prompt
-module.exports = mainMenu = () => {
+module.exports = mainMenu = async () => {
+  figlet("Employee DB", function (err, data) {
+    if (err) {
+      console.log("Something went wrong...");
+      console.dir(err);
+      return;
+    }
+    console.log(data);
+  });
+  await sleep(400);
   joinedTable().then((response) => {
     inquirer
       .prompt([
