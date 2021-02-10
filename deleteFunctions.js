@@ -121,7 +121,7 @@ module.exports = deleteRole = () => {
             if (element.title === roleName) {
               toBeDeleted = element.id;
             } else {
-              return mainMenu();
+              mainMenu();
             }
           });
           connection.query(`DELETE FROM role WHERE role.id = ${toBeDeleted}`);
